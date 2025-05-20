@@ -36,6 +36,11 @@ pipeline {
                 sh 'kubectl apply -f k8s/ingree.yml'
             }
         }
+        stage('Deploy Ingress contoller') {
+            steps {
+                sh './nginx-controller.sh'
+            }
+        }
     }
 
     post {
