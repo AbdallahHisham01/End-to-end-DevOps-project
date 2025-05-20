@@ -1,0 +1,61 @@
+- name: fetch kubeconfig file
+  hosts: master
+  become: true
+  tasks:
+    - name: get ip of master node
+      ansible.builtin.setup:
+        filter: ansible_default_ipv4
+      register: master_ip_object
+    - name: set master_ip value
+      ansible.builtin.set_fact:
+        master_ip: "{{ master_ip_object.ansible_facts.ansible_default_ipv4.address }}"
+        cacheable: yes
+    - name: check variable from prev step
+      ansible.builtin.debug:
+        var:  "{{ master_ip }}"
+    - name: set kubeconfig value
+      ansible.builtin.shell: export KUBECONFIG=/etc/kubernetes/admin.conf
+    - name: copy kubeconfig to ansible server
+      ansible.builtin.fetch:
+        src: /etc/kubernetes/admin.conf
+        dest: .
+
+- name: set master node ip in config file
+  hosts: localhost
+  become: true
+  tasks:
+    - ansible.builtin.set_fact:
+        master_ip: "{{ hostvars['master']['master_ip'] }}"
+    - name: set master node ip in config file
+      ansible.builtin.lineinfile:
+        path: "./master/etc/kubernetes/admin.conf"
+        regexp: '^\s*server: https://127.0.0.1:6443'
+        line: "    server: https://{{ master_ip }}:6443"
+
+- name: setup jenkins and kubectl
+  hosts: jenkins
+  become: true
+  tasks:
+    - name: copy jenkins installation script
+      ansible.builtin.copy:
+        src: ./install_jenkins.sh
+        dest: .
+        mode: "755"
+    - name: run jenkins installation script
+      ansible.builtin.shell: ./install_jenkins.sh
+    - name: copy kubeconfig file
+      ansible.builtin.copy:
+        src: ./master/etc/kubernetes/admin.conf
+        dest: /var/lib/jenkins/kubeconfig
+    - name: set kubeconfig value
+      ansible.builtin.shell: "export KUBECONFIG=/var/lib/jenkins/kubeconfig" 
+    - name: install kubectl
+      ansible.builtin.uri:
+        url: https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl
+        return_content: yes
+      register: kubectl
+    - name: save kubectl to /usr/local/bin
+      ansible.builtin.copy:
+        content: "{{ kubectl.content }}"
+        dest: /usr/local/bin/kubectl
+        mode: '0755'   
