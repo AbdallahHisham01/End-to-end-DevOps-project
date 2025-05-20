@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: express
+  name: express
+  namespace: mern
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express
+  template:
+    metadata:
+      labels:
+        app: express
+    spec:
+      containers:
+      - image: ahisham45/express:v1
+        name: express
+        env:
+          - name: MONGODB
+            value: mongo-svc
+
+          - name: MONGO_PORT 
+            value: "27017"

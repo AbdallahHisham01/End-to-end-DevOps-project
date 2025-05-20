@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: react
+  name: react
+  namespace: mern
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+      - image: ahisham45/react:v1
+        name: react
+        imagePullPolicy: Always
+        env:
+          - name: API_HOST
+            value: express-svc
