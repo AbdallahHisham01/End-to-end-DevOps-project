@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: 'localhost'
+    - host: 'localhost.localdomain'
       http:
         paths:
           - path: / 
@@ -22,4 +22,5 @@ spec:
               service:
                 name: express-svc 
                 port:
-                  number: 300
+                  number: 3001
+                  
