@@ -1,0 +1,19 @@
+Host bastion_host
+    HostName 13.217.160.66
+    User ec2-user
+    IdentityFile ./id_rsa
+    ForwardAgent yes
+
+Host master
+    HostName 10.0.3.49
+    User ec2-user
+    IdentityFile ./id_rsa
+    ProxyJump bastion_host
+    ForwardAgent yes
+
+Host worker
+    HostName 10.0.3.88
+    User ec2-user
+    IdentityFile ./id_rsa
+    ProxyJump bastion_host
+    ForwardAgent yes

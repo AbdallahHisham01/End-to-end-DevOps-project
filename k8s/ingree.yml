@@ -22,4 +22,4 @@ spec:
               service:
                 name: express-svc 
                 port:
-                  number: 3001
+                  number: 300

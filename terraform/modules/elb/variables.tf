@@ -1,0 +1,9 @@
+variable "sg_elb" {}
+variable "main_subnet_id" {}
+variable "standby_subnet_id" {}
+variable "vpc_id" {}
+variable "master_id" {}
+variable "worker_id" {}
+variable "jenkins_id" {}
+variable "standby_master_id" {}
+variable "standby_worker_id" {}
