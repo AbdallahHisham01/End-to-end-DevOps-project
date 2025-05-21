@@ -15,6 +15,10 @@ spec:
       labels:
         app: react
     spec:
+      tolerations:
+      - key: "node.kubernetes.io/disk-pressure"
+        operator: "Exists"
+        effect: "NoSchedule"
       containers:
       - image: ahisham45/react:v1
         name: react
