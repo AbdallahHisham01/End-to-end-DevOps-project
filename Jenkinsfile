@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage("Create mern namespace") {
             steps {
-                sh "kubectl get mern || kubectl create namespace mern"
+                sh "kubectl namespace get mern || kubectl create namespace mern"
             }
         }
         stage('Deploy PV and PVC') {
