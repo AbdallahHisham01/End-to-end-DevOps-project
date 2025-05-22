@@ -10,6 +10,22 @@ resource "aws_security_group" "elb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+    ingress {
+    description = "allow 3001"
+    from_port   = 3001
+    to_port     = 3001
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+      ingress {
+    description = "allow nodeport"
+    from_port   = 32653
+    to_port     = 32653
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
     description = "allow jenkins"
     from_port   = 8080

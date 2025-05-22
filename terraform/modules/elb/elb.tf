@@ -26,7 +26,7 @@ resource "aws_lb_target_group" "jenkins_tg" {
 
 resource "aws_lb_target_group" "main_tg" {
   name = "maintg"
-  port = 80
+  port = 32653
   protocol = "HTTP"
   vpc_id = var.vpc_id
   target_type = "instance"   
@@ -34,7 +34,7 @@ resource "aws_lb_target_group" "main_tg" {
 
 resource "aws_lb_target_group" "standby_tg" {
   name = "sectg"
-  port = 8000
+  port = 32653
   protocol = "HTTP"
   vpc_id = var.vpc_id
   target_type = "instance"   
@@ -43,6 +43,19 @@ resource "aws_lb_target_group" "standby_tg" {
 resource "aws_lb_listener" "main-lsnr" {
   load_balancer_arn = aws_lb.elb.arn
   port = 80
+  default_action {
+    type = "forward"
+    forward {
+      target_group {
+        arn    = aws_lb_target_group.main_tg.arn
+      }
+    }
+  }
+}
+
+resource "aws_lb_listener" "main-express-lsnr" {
+  load_balancer_arn = aws_lb.elb.arn
+  port = 3001
   default_action {
     type = "forward"
     forward {

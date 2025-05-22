@@ -23,4 +23,3 @@ spec:
                 name: express-svc 
                 port:
                   number: 3001
-                  
