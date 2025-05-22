@@ -25,4 +25,4 @@ spec:
         imagePullPolicy: Always
         env:
           - name: API_HOST
-            value: express-svc
+            value: elb-785745099.us-east-1.elb.amazonaws.com
