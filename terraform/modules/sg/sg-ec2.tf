@@ -26,6 +26,14 @@ resource "aws_security_group" "k8s_sg" {
     cidr_blocks      = [var.vpc_cidr]
   }
 
+    ingress {
+    description      = "allow 3001"
+    from_port        = 3001
+    to_port          = 3001
+    protocol         = "tcp"
+    cidr_blocks      = [var.vpc_cidr]
+  }
+
   ingress {
     description      = "allow ssh"
     from_port        = 22
