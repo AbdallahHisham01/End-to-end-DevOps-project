@@ -22,7 +22,7 @@ spec:
       containers:
       - image: ahisham45/react:v1
         name: react
-        imagePullPolicy: Always
+        #imagePullPolicy: Always
         env:
           - name: API_HOST
             value: elb-785745099.us-east-1.elb.amazonaws.com
