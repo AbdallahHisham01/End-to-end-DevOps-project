@@ -11,8 +11,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${REACT_IMAGE} ."
-                    sh "docker build -t ${EXPRESS_IMAGE} ."
+                    sh "docker build -t ${REACT_IMAGE} react"
+                    sh "docker build -t ${EXPRESS_IMAGE} express"
                 }
             }
         }
