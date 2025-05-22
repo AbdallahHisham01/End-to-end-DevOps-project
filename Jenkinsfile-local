@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    environment {
+        REACT_IMAGE = "ahisham45/react"
+        EXPRESS_IMAGE = "ahisham45/express"
+    }
+
+    stages {
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t ${REACT_IMAGE} ."
+                    sh "docker build -t ${EXPRESS_IMAGE} ."
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'abdallahdocker',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
+                )]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh "docker push ${REACT_IMAGE}"
+                    sh "docker push ${EXPRESS_IMAGE}"
+                }
+            }
+        }
+    }
+    }
