@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: 'elb-785745099.us-east-1.elb.amazonaws.com'
+    - host: elb-262208924.us-east-1.elb.amazonaws.com
       http:
         paths:
           - path: / 
@@ -23,3 +23,12 @@ spec:
                 name: express-svc 
                 port:
                   number: 3001
+    - host: 10.0.2.205
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: react-svc
+              port:
+                number: 80

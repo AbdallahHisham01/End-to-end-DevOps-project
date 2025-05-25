@@ -45,10 +45,10 @@ pipeline {
 
     post {
         success {
-            echo 'All Kubernetes manifests deployed successfully.'
+            echo 'success'
         }
         failure {
-            echo 'Deployment failed.'
+            echo 'failed'
         }
     }
 }
