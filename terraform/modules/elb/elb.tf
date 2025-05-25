@@ -34,7 +34,7 @@ resource "aws_lb_target_group" "main_tg" {
 
 resource "aws_lb_target_group" "standby_tg" {
   name = "sectg"
-  port = 32653
+  port = 32654
   protocol = "HTTP"
   vpc_id = var.vpc_id
   target_type = "instance"   

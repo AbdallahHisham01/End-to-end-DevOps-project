@@ -29,7 +29,7 @@ resource "aws_instance" "jenkins" {
   subnet_id = var.main_priv_subnet_id
   vpc_security_group_ids = [ var.sg_jenkins ]
   tags = {
-    Name = "Jenkins" 
+    Name = "Jenkins"
   }
 }
 
